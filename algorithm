@@ -824,19 +824,6 @@ namespace std{
 	}
 
 	template<class RandomAccessIterator> _UCXXEXPORT
-		void sort(RandomAccessIterator first, RandomAccessIterator last)
-	{
-		less<typename iterator_traits<RandomAccessIterator>::value_type> c;
-		sort(first, last, c );
-	}
-
-	template<class RandomAccessIterator, class Compare> _UCXXEXPORT
-		void sort(RandomAccessIterator first, RandomAccessIterator last, Compare comp)
-	{
-		stable_sort(first, last, comp);
-	}
-
-	template<class RandomAccessIterator> _UCXXEXPORT
 		void stable_sort(RandomAccessIterator first, RandomAccessIterator last)
 	{
 		less<typename iterator_traits<RandomAccessIterator>::value_type> c;
@@ -859,6 +846,19 @@ namespace std{
 			}
 			++first;
 		}
+	}
+
+	template<class RandomAccessIterator> _UCXXEXPORT
+		void sort(RandomAccessIterator first, RandomAccessIterator last)
+	{
+		less<typename iterator_traits<RandomAccessIterator>::value_type> c;
+		sort(first, last, c );
+	}
+
+	template<class RandomAccessIterator, class Compare> _UCXXEXPORT
+		void sort(RandomAccessIterator first, RandomAccessIterator last, Compare comp)
+	{
+		stable_sort(first, last, comp);
 	}
 
 	template<class RandomAccessIterator> _UCXXEXPORT
