@@ -273,11 +273,14 @@ namespace std {
 		return *this;
 	}
 #if defined( __AVR__ )
-	template <class charT, class traits> _UCXXEXPORT basic_ostream<charT,traits>& basic_ostream<charT, traits>::operator<<(const __FlashStringHelper* p ){
+	template <class charT, class traits> _UCXXEXPORT basic_ostream<charT,traits>& basic_ostream<charT, traits>::operator<<(const __FlashStringHelper* ifsh ){
 		sentry s(*this);
-		char buffer[64];
-		size_t p_len = strlcpy_P(buffer,reinterpret_cast<const char*>(p),sizeof(buffer));
-		printout(buffer, (p_len>=sizeof(buffer)) ? sizeof(buffer) - 1 : p_len ); 
+		PGM_P p = reinterpret_cast<PGM_P>(ifsh);
+		while (1) {
+			unsigned char c = pgm_read_byte(p++);
+			if (c == 0) break;
+			put(c);
+		}
 		if(basic_ios<charT,traits>::flags() & ios_base::unitbuf){
 			flush();
 		}
